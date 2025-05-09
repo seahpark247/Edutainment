@@ -12,7 +12,7 @@ struct HowManyQuestionsView: View {
     
     var body: some View {
         NavigationStack {
-            Text("Which questions you want?").font(.largeTitle)
+            Text("How many questions you want?").font(.largeTitle)
             
             VStack {
                 ForEach(questions, id: \.self) { question in
