@@ -34,9 +34,11 @@ struct ContentView: View {
             
             VStack {
                 ForEach(2..<13){ i in
-                    Button("\(i)") {
-                        selectTab(i)
-                    }.buttonStyle()
+                    NavigationLink(destination: HowManyQuestionsView()) {
+                        Button("\(i)") {
+                            selectTab(i)
+                        }.buttonStyle()
+                    }
                 }
             }.padding()
         }
