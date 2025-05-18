@@ -24,31 +24,48 @@ extension View {
     }
 }
 
+class Question: ObservableObject {
+    @Published var multipleTable: Int = 2
+    @Published var questionCounts: Int = 5
+    @Published var question: [Int] = [2,3,4,5,6]
+    @Published var answer: [Int] = [4,6,8,10,12]
+}
+
 struct ContentView: View {
-    @State private var selectedTab: Int? = 0
+    @StateObject var question = Question()
+    @State private var path = NavigationPath()
     
     var body: some View {
-        NavigationStack {
-            Spacer()
-            Text("Which multiplication table would you like to learn?").font(.largeTitle)
-            
+        NavigationStack(path: $path) {
             VStack {
-                ForEach(2..<13){ i in
-                    NavigationLink(destination: HowManyQuestionsView()) {
+                Spacer()
+                Text("Which multiplication table would you like to learn?")
+                    .font(.largeTitle)
+                
+                VStack {
+                    ForEach(2..<13) { i in
                         Button("\(i)") {
-                            selectTab(i)
-                        }.buttonStyle()
+                            question.multipleTable = i
+                            path.append("howMany")
+                        }
+                        .buttonStyle()
                     }
                 }
-            }.padding()
+                .padding()
+                Spacer()
+            }
+            .navigationDestination(for: String.self) { value in
+                switch value {
+                case "howMany":
+                    HowManyQuestionsView(path: $path).environmentObject(question)
+                case "questions":
+                    QuestionsView(path: $path).environmentObject(question)
+                default:
+                    EmptyView()
+                }
+            }
         }
     }
-    
-    func selectTab(_ index: Int) {
-        selectedTab = index
-    }
-    
-    
 }
 
 #Preview {

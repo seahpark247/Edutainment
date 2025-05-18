@@ -8,23 +8,33 @@
 import SwiftUI
 
 struct HowManyQuestionsView: View {
+    @EnvironmentObject var question: Question
     let questions: [Int] = [5, 10, 20]
-    
+    @Binding var path: NavigationPath
+
     var body: some View {
-        NavigationStack {
-            Text("How many questions you want?").font(.largeTitle)
-            
+        VStack {
+            Text("How many questions do you want?")
+                .font(.largeTitle)
+                .padding()
+
             VStack {
-                ForEach(questions, id: \.self) { question in
-                    NavigationLink(destination: QuestionsView()){
-                        Button("\(question)"){}.buttonStyle()
+                ForEach(questions, id: \.self) { num in
+                    Button("\(num)") {
+                        question.questionCounts = num
+                        question.question = (0..<num).map { _ in Int.random(in: 2...9) }
+                        question.answer = question.question.map { $0 * question.multipleTable }
+
+                        path.append("questions")
                     }
+                    .buttonStyle()
                 }
-            }.padding()
+            }
+            .padding()
         }
     }
 }
 
 #Preview {
-    HowManyQuestionsView()
+    HowManyQuestionsView(path: .constant(NavigationPath())).environmentObject(Question())
 }
