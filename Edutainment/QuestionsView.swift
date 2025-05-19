@@ -35,8 +35,12 @@ struct QuestionsView: View {
                         .cornerRadius(20)
                         .padding(.bottom, 10)
                     
-                    Button { answerCheck() } label: {
-                        Text("Go!").buttonStyle()
+                    HStack {
+                        Spacer()
+                        
+                        Button { answerCheck() } label: {
+                            Text("Go!").buttonStyle()
+                        }
                     }
                     
                     Button("Reset Game") {

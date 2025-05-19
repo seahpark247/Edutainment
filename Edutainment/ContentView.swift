@@ -11,8 +11,8 @@ struct ButtonStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.largeTitle.bold())
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 4)
+            .padding(4)
+            .padding(.horizontal, 4)
             .background(.blue.opacity(0.2))
             .cornerRadius(10)
     }
