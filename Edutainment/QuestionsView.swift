@@ -64,7 +64,7 @@ struct QuestionsView: View {
                 
                 ForEach(wrongHistory, id: \.self) { item in
                     Text(item)
-                }
+                }.foregroundColor(.black).fontWeight(.bold)
 
             }
         }.alert(played == question.questionCounts ? "Play again" : "Enter your answer", isPresented: $showAlert) {
