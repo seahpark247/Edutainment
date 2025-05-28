@@ -34,7 +34,9 @@ class Question: ObservableObject {
 struct ContentView: View {
     @StateObject var question = Question()
     @State private var path = NavigationPath()
-    let columns: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: 16), count: 5)
+    let layout = [
+        GridItem(.adaptive(minimum: 70))
+    ]
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -43,7 +45,7 @@ struct ContentView: View {
                 Text("Which multiplication table would you like to learn?")
                     .font(.largeTitle)
                 
-                LazyVGrid(columns: columns, spacing: 16) {
+                LazyVGrid(columns: layout, spacing: 16) {
                     ForEach(2..<13) { i in
                         Button("\(i)") {
                             question.multipleTable = i
